@@ -7,7 +7,6 @@ from itertools import filterfalse
 
 import app
 import test_app
-from testing.pretests import test_imports
 
 # 1
 def test_readme():
@@ -15,7 +14,6 @@ def test_readme():
 
 # 2
 def test_readme_desc():
-    READMELOOKGOOD = True
     f = open('README.md', "r", encoding='utf8')
     content = f.read().split()
     f.close()

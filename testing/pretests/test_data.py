@@ -7,7 +7,7 @@ def _test_email(email):
     '''
     Regex for Testing Valid email address
     '''
-    regex = '^[a-zA-Z](\w|\.|\-)*[@](\w|\.|\-)+[.][a-zA-Z]{2,4}$'
+    regex = r'^[a-zA-Z](\w|\.|\-)*[@](\w|\.|\-)+[.][a-zA-Z]{2,4}$'
     return bool(re.search(regex, email.strip()))
 
 
@@ -15,7 +15,7 @@ def _test_name(name):
     '''
     Regex for Testing Valid name
     '''
-    regex = '^[a-zA-Z ]+$'
+    regex = r'^[a-zA-Z ]+$'
     return bool(re.search(regex, name.strip()))
 
 
