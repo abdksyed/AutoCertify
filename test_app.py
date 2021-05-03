@@ -99,6 +99,7 @@ def test_template_certificate():
 def test_package():
     expected_packages = ['certificates', 'data_loader', 'mailing', 'mailing\\login', 'testing\\pretests']
     for package in expected_packages:
+        print(package)
         _, _, filenames = next(os.walk(package))
         assert '__init__.py' in filenames
 
@@ -236,8 +237,8 @@ def test_send_mail(monkeypatch):
     test_mail = 'tsaieva4@gmail.com'
     password = os.environ['GMAIL_PASSWORD']
     try:
-        monkeypatch.setattr('builtins.input', lambda _: test_mail)
-        monkeypatch.setattr('getpass.getpass', lambda prompt: password)
+        monkeypatch.setattr('builtins.input', lambda _: iter([test_mail,password]))
+        #monkeypatch.setattr('getpass.getpass', lambda prompt: password)
         send_mail(test_mail, test_mail, 'Test Mail', mail_type = 'credentials')
         assert True
     except:

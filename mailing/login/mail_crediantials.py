@@ -17,8 +17,8 @@ def _gmail_crediantials():
         nonlocal sender_email, password
         if not (sender_email and password):
             sender_email = input("Enter the Sender's email address, leave empty if want to use default: ") or "tsaieva4@gmail.com"
-            #password = input('Type Password and press Enter: ')
-            password = getpass.getpass(prompt='Type Password and press Enter: ')
+            password = input('Type Password and press Enter: ')
+            #password = getpass.getpass(prompt='Type Password and press Enter: ')
             print('Checking Password.....Initiating Printing and Sending Mails. Please Wait..........')
 
         return sender_email, password
