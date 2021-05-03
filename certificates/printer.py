@@ -22,7 +22,7 @@ def processing(img: 'PIL Image File', co_ord, print_content, font_size, new=Fals
         img - Processed PIL Image
     '''
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype('certificates\ITCBLKAD.TTF', font_size)
+    font = ImageFont.truetype('certificates/ITCBLKAD.TTF', font_size)
     draw.text(co_ord, print_content, font=font, fill='black', anchor='ms')
 
     return img

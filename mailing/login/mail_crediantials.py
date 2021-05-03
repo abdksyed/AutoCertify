@@ -17,8 +17,8 @@ def _gmail_crediantials():
         nonlocal sender_email, password
         if not (sender_email and password):
             sender_email = input("Enter the Sender's email address, leave empty if want to use default: ") or "tsaieva4@gmail.com"
-            password = input('Type Password and press Enter: ')
-            #password = getpass.getpass(prompt='Type Password and press Enter: ')
+            #password = input('Type Password and press Enter: ')
+            password = getpass.getpass(prompt='Type Password and press Enter: ')
             print('Checking Password.....Initiating Printing and Sending Mails. Please Wait..........')
 
         return sender_email, password
@@ -39,10 +39,10 @@ def send_mail(sender:str, receiver:str, message:str):
     context = ssl.create_default_context()
 
     with smtplib.SMTP_SSL('smtp.gmail.com', port, context=context) as server:
-        #try: 
-        server.login(*_crediantials()) #Not storing user input email and password and directly using it to login
-        # except smtplib.SMTPAuthenticationError:
-        #     print('Invalid Credentials. Please Enter Again')
-        #     _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.
-        #     return send_mail(sender, receiver, message)
+        try: 
+            server.login(*_crediantials()) #Not storing user input email and password and directly using it to login
+        except smtplib.SMTPAuthenticationError:
+            print('Invalid Credentials. Please Enter Again')
+            _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.
+            return send_mail(sender, receiver, message)
         server.sendmail(sender, receiver, message)

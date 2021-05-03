@@ -237,10 +237,26 @@ def test_send_mail(monkeypatch):
     test_mail = 'tsaieva4@gmail.com'
     password = os.environ.get('GMAIL_PASSWORD')
     responses = iter([test_mail,password])
-    #try:
-    monkeypatch.setattr('builtins.input', lambda _: next(responses))
-    #monkeypatch.setattr('getpass.getpass', lambda prompt: password)
-    send_mail(test_mail, test_mail, 'Test Mail', mail_type = 'credentials')
-    assert True
-    # except:
-    #     assert False, 'Error When Sending Mail, pleae check!'
+    try:
+        monkeypatch.setattr('builtins.input', lambda _: next(responses))
+        monkeypatch.setattr('getpass.getpass', lambda prompt: password)
+        send_mail(test_mail, test_mail, 'Test Mail', mail_type = 'credentials')
+        assert True
+    except:
+        assert False, 'Error When Sending Mail, pleae check!'
+
+# 25
+def test_message_text():
+    from mailing import compose_message
+    contents = compose_message('Test', 'Test', 'Test', 'static/pass.html', 'static/pass.txt')
+    regex = r'^(Content-Type: multipart/alternative)'
+    assert re.match(regex, contents['message'].as_string())
+
+# 26
+def test_message_attach():
+    from mailing import compose_attachment
+    contents = compose_attachment('Test', 'Test', attachment='static/pass.txt')
+    regex = r'^(Content-Type: multipart/alternative)'
+    assert re.match(regex, contents.as_string())
+
+# 27
