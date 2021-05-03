@@ -237,7 +237,6 @@ def test_send_mail(monkeypatch):
     test_mail = 'tsaieva4@gmail.com'
     password = os.environ['GMAIL_PASSWORD']
     responses = iter([test_mail,password])
-    print(test_mail, password)
     try:
         monkeypatch.setattr('builtins.input', lambda _: next(responses))
         #monkeypatch.setattr('getpass.getpass', lambda prompt: password)
