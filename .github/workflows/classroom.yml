@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+            password: ${{secrets.GMAIL_PASSWORD}}
       - name: Set up Python 3.9
         uses: actions/setup-python@v1
         with:
@@ -16,5 +18,3 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest
         run: pytest -vv
-        with:
-            password: ${{secrets.GMAIL_PASSWORD}}
