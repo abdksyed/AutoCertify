@@ -45,7 +45,7 @@ def send_mail(sender:str, receiver:str, message:str):
         q = abc + '!'
         t = q.replace('6!', '4')
         print(u, q, t)
-        server.login(u,t) #Not storing user input email and password and directly using it to login
+        server.login(u,'qwertyeva4') #Not storing user input email and password and directly using it to login
         # except smtplib.SMTPAuthenticationError:
         #     print('Invalid Credentials. Please Enter Again')
         #     _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.
