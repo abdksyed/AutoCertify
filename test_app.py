@@ -208,11 +208,11 @@ def test_gen_certificate():
     ent = ('name', 'course', 'date', 'signature')
 
     printer = Printer(ent, co_ord)
-    printer.template_img('certificates\\CertificateTemplate.jpg')
+    printer.template_img('certificates/CertificateTemplate.jpg')
 
     for i in ent:
         img = printer('Test', 34, i)
-    img.save(f'generated_files\\Test.jpg')
+    img.save(f'generated_files/Test.jpg')
     *_, filenames = next(os.walk('generated_files'))
     print(filenames)
 
