@@ -30,8 +30,12 @@ def processing(img: 'PIL Image File', co_ord, print_content, font_size, new=Fals
 
 class Printer:
 
-    def __init__(self, types_:tuple):
+    def __init__(self, types_:tuple, co_ordinates:tuple = None):
         self.types_ = types_
+        if not co_ordinates:
+            self.co_ordinates = (None,)*len(types_)
+        else:
+            self.co_ordinates = co_ordinates
 
         @get_cord
         def printo(self, content, font_size, type_, new=False):
@@ -49,7 +53,7 @@ class Printer:
             '''
             return 'This is Default!'
 
-        @printo.register(self.types_[0])
+        @printo.register(self.types_[0],self.co_ordinates[0])
         def print_name():
             '''
             The function is wrapped with the main printo function's Register, where this function
@@ -60,7 +64,7 @@ class Printer:
             '''
             return processing
 
-        @printo.register(self.types_[1])
+        @printo.register(self.types_[1],self.co_ordinates[1])
         def print_course():
             '''
             The function is wrapped with the main printo function's Register, where this function
@@ -71,7 +75,7 @@ class Printer:
             '''
             return processing
 
-        @printo.register(self.types_[2])
+        @printo.register(self.types_[2],self.co_ordinates[2])
         def print_date():
             '''
             The function is wrapped with the main printo function's Register, where this function
@@ -82,7 +86,7 @@ class Printer:
             '''
             return processing
 
-        @printo.register(self.types_[3])
+        @printo.register(self.types_[3],self.co_ordinates[3])
         def print_signature():
             '''
             The function is wrapped with the main printo function's Register, where this function
@@ -95,9 +99,8 @@ class Printer:
 
         self.printo = printo
         self.template_img = printo.template_img
-        self
     
     def __call__(self, content=None, font_size=None, type_=None, new=False):
-        if not all((content, font_size, type_, new)):
+        if not all((content, font_size, type_)):
             return self.printo
         return self.printo(content, font_size, type_, new)

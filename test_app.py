@@ -236,7 +236,7 @@ def test_data_loader():
 def test_send_mail(monkeypatch):
     from mailing import send_mail
     test_mail = 'tsaieva4@gmail.com'
-    passwprd = os.environ['GMAIL_PASSWORD']
+    password = os.environ['GMAIL_PASSWORD']
     try:
         monkeypatch.setattr('builtins.input', lambda _: test_mail)
         monkeypatch.setattr('getpass.getpass', lambda prompt: password)

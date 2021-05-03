@@ -16,8 +16,8 @@ class Print_certificate():
     A call() class which run when the object is called, prints the Student Data on the Certificate,
     if the certificate is not present in the folder.
     '''
-    def __init__(self, img_path: 'PATH', ):
-        self.printer = Printer(('name', 'course', 'date', 'signature'))
+    def __init__(self, img_path: 'PATH', co_ord:str = None):
+        self.printer = Printer(('name', 'course', 'date', 'signature'), co_ord)
         self.printer.template_img(img_path)
     
     def __call__(self, student_det: namedtuple, course_name: str, date:str, fonts: [int,tuple]):
@@ -54,6 +54,6 @@ def mailer(sender:str, receiver:str, subject:str, html_file: 'PATH', plain_file:
     sender, receiver, message = mail_data.values()
     message = compose_attachment(sender, receiver, message, file_name)
 
-    send_mail(sender, sender, message.as_string(), mail_type = mail_type)
+    send_mail(sender, receiver, message.as_string(), mail_type = mail_type)
 
     return 200, 'SUCCESS'

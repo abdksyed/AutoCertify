@@ -62,10 +62,13 @@ def get_cord(fn:callable):
     registry['cv_img'] = cv.imread("F:\\#Coding\\Capstone\\certificates\\CertificateTemplate.jpg")
 
     # Child Decorator
-    def register(type_):
+    def register(type_, co_ord=None):
         def inner(fn):
-            print(f'Double Left Click on the Middle Bottom Point on Template Where the "{type_}" is to be printed!')
-            _open_cv_box(registry['cv_img'], type_)
+            if not co_ord:
+                print(f'Double Left Click on the Middle Bottom Point on Template Where the "{type_}" is to be printed!')
+                _open_cv_box(registry['cv_img'], type_)
+            else:
+                co_ordinates[type_] = co_ord
             registry[type_] = fn()
             return fn
             

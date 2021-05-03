@@ -39,15 +39,16 @@ if __name__ == '__main__':
     parser.add_argument("-d", "--data", help="The File Path of Student CSV Data", default='data.csv')
     parser.add_argument("-s", "--sender", help="The sender email id", default = 'tsaieva4@gmail.com')
     parser.add_argument('-date', help='Date to be printed on Certificate', default = datetime.today().strftime('%d-%b-%Y'))
-    parser.add_argument('-t', '--temp', help='The Template Certificate Image',default="certificates\\CertificateTemplate.jpg")
-    parser.add_argument('-c', '--course', help='The Name of the Course',default="Extensive Visual AI Program Phase 4")
+    parser.add_argument('-t', '--temp', help='The Template Certificate Image', default="certificates\\CertificateTemplate.jpg")
+    parser.add_argument('-c', '--course', help='The Name of the Course', default="Extensive Visual AI Program Phase 4")
+    parser.add_argument('-x', '--co_ord', help='All Cordinates as Tuple to be Printed', default=None, type= tuple)
 
     args = parser.parse_args()
     student_data = CSV_loader(args.data) #args.data_file
     Student = namedtuple('Student', 'name marks email')
     sender_mail = args.sender
     date = args.date
-    print_certificate = Print_certificate(args.temp)
+    print_certificate = Print_certificate(args.temp, args.co_ord)
     course_name = args.course
-
+    
     main(student_data, print_certificate, course_name, date, (48,48,30,30))
