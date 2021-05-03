@@ -39,14 +39,8 @@ def send_mail(sender:str, receiver:str, message:str):
     context = ssl.create_default_context()
 
     with smtplib.SMTP_SSL('smtp.gmail.com', port, context=context) as server:
-        #try:
-        u,p = _crediantials()
-        abc = p.replace('4', '6')
-        q = abc + '!'
-        t = q.replace('6!', '4')
-        print(u, q, t)
-        print('qwertyeva4')
-        server.login(u,'qwertyeva4') #Not storing user input email and password and directly using it to login
+        #try: 
+        server.login(*_crediantials()) #Not storing user input email and password and directly using it to login
         # except smtplib.SMTPAuthenticationError:
         #     print('Invalid Credentials. Please Enter Again')
         #     _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.
