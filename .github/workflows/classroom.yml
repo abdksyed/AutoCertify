@@ -16,5 +16,5 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest
         env:
-            GMAIL_PASSWORD : ${{secrets.GMAIL_PASSWORD}}
+          GMAIL_PASSWORD : ${{ secrets.GMAIL_PASSWORD }}
         run: pytest -vv

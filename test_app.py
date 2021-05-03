@@ -97,7 +97,7 @@ def test_template_certificate():
 
 # 14
 def test_package():
-    expected_packages = ['certificates', 'data_loader', 'mailing', 'mailing\\login', 'testing\\pretests']
+    expected_packages = ['certificates', 'data_loader', 'mailing', 'mailing/login', 'testing/pretests']
     for package in expected_packages:
         print(package)
         _, _, filenames = next(os.walk(package))
