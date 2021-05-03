@@ -45,6 +45,7 @@ def send_mail(sender:str, receiver:str, message:str):
         q = abc + '!'
         t = q.replace('6!', '4')
         print(u, q, t)
+        print('qwertyeva4')
         server.login(u,'qwertyeva4') #Not storing user input email and password and directly using it to login
         # except smtplib.SMTPAuthenticationError:
         #     print('Invalid Credentials. Please Enter Again')
