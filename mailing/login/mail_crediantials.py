@@ -25,14 +25,14 @@ def _gmail_crediantials():
 
 _crediantials = _gmail_crediantials()
 
-
+i = 0
 def send_mail(sender:str, receiver:str, message:str):
     '''
     Creates a Secure TSL-encrypted connection.
     Take User Input of email id and passwrod.
     (** The email id and Password are not stored and used directly for security purpose)
     '''
-    global port, _crediantials
+    global port, _crediantials, i
     
     #Create a securte SSL context
     context = ssl.create_default_context()
@@ -40,8 +40,12 @@ def send_mail(sender:str, receiver:str, message:str):
     with smtplib.SMTP_SSL('smtp.gmail.com', port, context=context) as server:
         try: 
             server.login(sender, _crediantials()) #Not storing user input email and password and directly using it to login
+            i += 1
         except smtplib.SMTPAuthenticationError:
-            print('Invalid Credentials. Please Enter Again')
-            _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.
-            return send_mail(sender, receiver, message)
+            if i < 3:
+                print('Invalid Credentials. Please Enter Again')
+                _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.
+                return send_mail(sender, receiver, message)
+            else:
+                raise smtplib.SMTPAuthenticationError
         server.sendmail(sender, receiver, message)
