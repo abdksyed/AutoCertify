@@ -4,6 +4,7 @@ import os
 import inspect
 import socket
 from itertools import filterfalse
+import subprocess
 
 import app
 import test_app
@@ -237,7 +238,6 @@ def test_send_mail(monkeypatch):
     test_mail = 'tsaieva4@gmail.com'
     password = os.environ.get('GMAIL_PASSWORD')
     try:
-        monkeypatch.setattr('builtins.input', lambda _: test_mail)
         monkeypatch.setattr('getpass.getpass', lambda prompt: password)
         send_mail(test_mail, test_mail, 'Test Mail', mail_type = 'credentials')
         assert True
@@ -257,3 +257,8 @@ def test_message_attach():
     contents = compose_attachment('Test', 'Test', attachment='static/pass.txt')
     regex = r'^(Content-Type: multipart/alternative)'
     assert re.match(regex, contents.as_string())
+
+# 27
+def test_command_line():
+    subprocess.run("python app.py --co_ord ((100,100),(100,100),(100,100),(100,100))")
+    assert True

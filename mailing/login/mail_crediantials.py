@@ -9,19 +9,18 @@ def _gmail_crediantials():
     A Closure, to allow us to keep the input email id and password in memory 
     for multiple use, or ask for input for the first time.
     '''
-    sender_email, password = None, None
+    password = None
     def inner():
         '''
         
         '''
-        nonlocal sender_email, password
-        if not (sender_email and password):
-            sender_email = input("Enter the Sender's email address, leave empty if want to use default: ") or "tsaieva4@gmail.com"
+        nonlocal password
+        if not password:
             #password = input('Type Password and press Enter: ')
             password = getpass.getpass(prompt='Type Password and press Enter: ')
             print('Checking Password.....Initiating Printing and Sending Mails. Please Wait..........')
 
-        return sender_email, password
+        return password
     return inner
 
 _crediantials = _gmail_crediantials()
@@ -40,7 +39,7 @@ def send_mail(sender:str, receiver:str, message:str):
 
     with smtplib.SMTP_SSL('smtp.gmail.com', port, context=context) as server:
         try: 
-            server.login(*_crediantials()) #Not storing user input email and password and directly using it to login
+            server.login(sender, _crediantials()) #Not storing user input email and password and directly using it to login
         except smtplib.SMTPAuthenticationError:
             print('Invalid Credentials. Please Enter Again')
             _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.
