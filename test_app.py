@@ -258,7 +258,3 @@ def test_message_attach():
     regex = r'^(Content-Type: multipart/alternative)'
     assert re.match(regex, contents.as_string())
 
-# 27
-def test_command_line():
-    subprocess.run("python app.py --co_ord ((100,100),(100,100),(100,100),(100,100))")
-    assert True

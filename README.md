@@ -28,6 +28,8 @@ Also the Script uses other Python libraries:
 * numpy ```pip install numpy```
 * open-cv ```pip install opencv-pytohn```
 * Pillow ```pip install Pillow```
+* Pytest ```pip install pytest```
 
-## Under Development
+The application automatically takes care of the libraries 
+### Under Development
 The application is still under testing and test cases are being developed, and the README will be updated soon with entire How to Use.

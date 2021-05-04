@@ -104,3 +104,4 @@ class Printer:
         if not all((content, font_size, type_)):
             return self.printo
         return self.printo(content, font_size, type_, new)
+        
