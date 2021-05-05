@@ -233,7 +233,7 @@ def test_data_loader():
         assert row == next(act_loader).strip()
 
 # 24
-def test_send_mail(monkeypatch):
+def _test_send_mail(monkeypatch):
     from mailing import send_mail
     test_mail = 'tsaieva4@gmail.com'
     password = os.environ.get('GMAIL_PASSWORD')
@@ -258,3 +258,94 @@ def test_message_attach():
     regex = r'^(Content-Type: multipart/alternative)'
     assert re.match(regex, contents.as_string())
 
+## Invalid Check
+
+# 27
+def test_printer_invalid_types():
+    from certificates import Printer
+    with pytest.raises(TypeError):
+        Printer('name')
+
+# 28
+def test_printer_invalid_co_ord():
+    from certificates import Printer
+    with pytest.raises(TypeError):
+        Printer(('name','score'), co_ordinates=0)
+
+# 29   
+def test_printer_invalid_co_ord_value():
+    from certificates import Printer
+    with pytest.raises(ValueError):
+        Printer(('name','score'), co_ordinates=(120,100))
+
+# 30
+def test_printer_unequal_co_ord_value():
+    from certificates import Printer
+    with pytest.raises(ValueError):
+        Printer(('name','score', 'signature'), co_ordinates=((120,100),(120,650)))
+
+# 31
+def test_printer_call_invalid_content():
+    from certificates import Printer
+    co_ordinates=((0,0),(0,0),(0,0),(0,0))
+    printer = Printer(('name','score','date','signature'), co_ordinates)
+    with pytest.raises(TypeError):
+        printer(311, 36, 'name', True)
+
+# 32
+def test_printer_call_invalid_font():
+    from certificates import Printer
+    co_ordinates=((0,0),(0,0),(0,0),(0,0))
+    printer = Printer(('name','score','date','signature'), co_ordinates)
+    with pytest.raises(TypeError):
+        printer('Ajay', '36', 'name', True)
+
+# 33
+def test_printer_call_invalid_type():
+    from certificates import Printer
+    co_ordinates=((0,0),(0,0),(0,0),(0,0))
+    printer = Printer(('name','score','date','signature'), co_ordinates)
+    with pytest.raises(TypeError):
+        printer('Kumar', 36, ('name',), True)
+
+# 34
+def test_printer_call_invalid_new():
+    from certificates import Printer
+    co_ordinates=((0,0),(0,0),(0,0),(0,0))
+    printer = Printer(('name','score','date','signature'), co_ordinates)
+    with pytest.raises(TypeError):
+        printer('Kumar', 36, 'name', 'True')
+
+# 35
+def test_printer_call_wrong_type():
+    from certificates import Printer
+    co_ordinates=((0,0),(0,0),(0,0),(0,0))
+    printer = Printer(('name','score','date','signature'), co_ordinates)
+    with pytest.raises(ValueError):
+        printer('Kumar', 36, 'number', True)
+
+# 36
+def test_data_loader_invalid_path_type():
+    from data_loader import CSV_loader
+    with pytest.raises(TypeError):
+        CSV_loader(0)
+
+# 37
+def test_data_loader_file_not_exist():
+    from data_loader import CSV_loader
+    with pytest.raises(FileExistsError):
+        next(CSV_loader('data2.csv'))
+
+# 38
+def test_data_loader_file_not_found():
+    from data_loader import CSV_loader
+    with pytest.raises(FileNotFoundError):
+        next(CSV_loader('docs'))
+    
+# 39
+def test_data_loader_invalid_file():
+    from data_loader import CSV_loader
+    with pytest.raises(TypeError):
+        next(CSV_loader('certificates/CertificateTemplate.jpg'))
+
+# 40

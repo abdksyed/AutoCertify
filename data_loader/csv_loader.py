@@ -1,4 +1,5 @@
 # csv_loader.py
+from os import path
 
 class CSV_loader():
     '''
@@ -11,6 +12,15 @@ class CSV_loader():
         file_path - The path fo the CSV file.
     '''
     def __init__(self, file_path):
+        if not isinstance(file_path, str):
+            raise TypeError('The File path must be a string')
+        if not path.exists(file_path):
+            raise FileExistsError('Invalid Path Given')
+        if not path.isfile(file_path):
+            raise FileNotFoundError('The path given is not a file')
+        if file_path.split('.')[-1].lower() != 'csv':
+            raise TypeError('File must be of CSV type')
+            
         self.path = file_path
         self._data = self._csv_reader()
 

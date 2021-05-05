@@ -18,7 +18,9 @@ The marks should be between 0 to 100, rejects the record where the marks are not
 The Application will check for proper name format and email format, and reject the row with invalid details.
 
 ## Getting Started.
-The Application requires t ohave Python 3 installed, preferably Python 3.9 and above.  
+
+### Before Getting Started:
+The Application requires to have Python 3 installed, preferably Python 3.9 and above.  
 As this application was developed and tested on Python 3.9
 
 To download Python:
@@ -30,6 +32,54 @@ Also the Script uses other Python libraries:
 * Pillow ```pip install Pillow```
 * Pytest ```pip install pytest```
 
-The application automatically takes care of the libraries 
+The application automatically takes care of the libraries and ask user pemission to install them, if they are not present before running the application.  
+Also, the application send mails to the students, so it check for Internet connection before procedding, and will raise an error it there is no active internet connection.
+
+### Running from Command Line
+To get help on the command line application, run the command:
+```
+python app.py -h
+```
+output
+>>>
+    usage: AutoCertify [-h] -s SENDER [-date DATE] [-t TEMP] [-c COURSE] [-x CO_ORD] {single,batch} ...
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -s SENDER, --sender SENDER
+                            The sender email id
+    -date DATE            Date to be printed on Certificate
+    -t TEMP, --temp TEMP  The Template Certificate Image
+    -c COURSE, --course COURSE
+                            The Name of the Course
+    -x CO_ORD, --co_ord CO_ORD
+                            All Cordinates as Tuple to be Printed. Blank to Open Selection Box
+
+    Modes:
+    Different Types of Creating Certificates & Sending Mails
+
+    {single,batch}
+        single              Create and Send certificates to single student.
+        batch               Create and Send certificates to batch of student.
+>>>
+
+To create and send certificate for one student, use **single** mode.  
+To get help on single mode arguments run:
+```
+python app.py single -h
+```
+output
+
+    usage: AutoCertify single [-h] -n NAME --score SCORE -r RECEIVER
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    -n NAME, --name NAME  The receiver email id
+    --score SCORE         The score of the Student
+    -r RECEIVER, --receiver RECEIVER
+                            The name of the Student
+
+
+
 ### Under Development
 The application is still under testing and test cases are being developed, and the README will be updated soon with entire How to Use.

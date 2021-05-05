@@ -31,10 +31,19 @@ def processing(img: 'PIL Image File', co_ord, print_content, font_size, new=Fals
 class Printer:
 
     def __init__(self, types_:tuple, co_ordinates:tuple = None):
+        if not isinstance(types_, (tuple, list)):
+            raise TypeError('Types_ must be either a tuple of a list')
+
         self.types_ = types_
-        if not co_ordinates:
+        if co_ordinates == None: # Can be zero
             self.co_ordinates = (None,)*len(types_)
         else:
+            if not isinstance(co_ordinates, (tuple, list)):
+                raise TypeError('Co-ordinates must be collection a tuples or lists')
+            if not isinstance(co_ordinates[-1], (tuple, list)):
+                raise ValueError('The elements of Co-ordinates must be eith tuple or list')
+            if len(types_) != len(co_ordinates):
+                raise ValueError('Provide Co-rodinates for All Types')
             self.co_ordinates = co_ordinates
 
         @get_cord
@@ -100,8 +109,20 @@ class Printer:
         self.printo = printo
         self.template_img = printo.template_img
     
-    def __call__(self, content=None, font_size=None, type_=None, new=False):
+    def __call__(self, content:str =None, font_size:int =None, type_:str =None, new:bool =False):
         if not all((content, font_size, type_)):
             return self.printo
+        
+        if not isinstance(content, str):
+            raise TypeError('The Content to be printed must string')
+        if not isinstance(font_size, int):
+            raise TypeError('The font size must be an interger between 12-72')
+        if not isinstance(type_, str):
+            raise TypeError('The type must be a string')
+        if type_ not in self.types_:
+            raise ValueError(f'Type must of one of {self.types_}')
+        if not isinstance(new, bool):
+            raise TypeError('new must be True or False')
+
         return self.printo(content, font_size, type_, new)
         
