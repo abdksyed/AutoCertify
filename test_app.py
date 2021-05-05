@@ -180,12 +180,13 @@ def test_certificates_names():
             yield from csv_file
     
     *_, filenames = next(os.walk('generated_files'))
-    # data -> row string, split -> list, [0] -> name.
-    names = {data.split(',')[0].strip().title() for data in data_gen() if not data.isspace()}
-    for file in filenames:
-        if file == 'Test.jpg':
-            continue
-        assert file.split('.')[0] in names, 'Additional Files found in Generated Files Folder'
+    # data -> row string, split -> list, [0] -> name. [1] -> score
+    names = {(data.split(',')[0].strip().title(), int(data.split(',')[1]))
+                            for data in data_gen() if not data.isspace()}
+    for name,score in names:
+        if score >  70:
+            name = name+'.jpg'
+            assert name in filenames, 'All the Qualified Students Certificates Not Present'
 
 # 20
 def test_certificate_extension():
@@ -233,7 +234,7 @@ def test_data_loader():
         assert row == next(act_loader).strip()
 
 # 24
-def _test_send_mail(monkeypatch):
+def test_send_mail(monkeypatch):
     from mailing import send_mail
     test_mail = 'tsaieva4@gmail.com'
     password = os.environ.get('GMAIL_PASSWORD')
