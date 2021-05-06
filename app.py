@@ -6,7 +6,7 @@ import argparse
 
 import testing.pretests as pretest
 from data_loader import CSV_loader
-from utils import Print_certificate, mailer
+from utils import Print_certificate, mailer, parse_tuple
 
 Student = namedtuple('Student', 'name marks email')
 
@@ -38,7 +38,6 @@ def single_mode(sender_mail: str, student_data: str, printer: Print_certificate,
     '''
     '''
     data = pretest.data_validate(student_data)
-    print(data)
     if data.check:
         stud = Student(*data.data)
     else:
@@ -47,7 +46,7 @@ def single_mode(sender_mail: str, student_data: str, printer: Print_certificate,
     if int(stud.marks) > 70: #Passing Cutoff
         printer(stud, course_name, date, fonts)
         mailer(sender_mail, stud.email, 'Congratulations on Qualifying', 'static\\pass.html', 'static\\pass.txt', f'generated_files\\{stud.name}.jpg')
-    else:
+    else:   
         mailer(sender_mail, stud.email, 'Sorry. You missed the Qualification', 'static\\fail.html', 'static\\fail.txt')
     
     print('Certificate Created and Mailed!')
@@ -59,7 +58,7 @@ if __name__ == '__main__':
     parser.add_argument('-date', help='Date to be printed on Certificate', default = datetime.today().strftime('%d-%b-%Y'))
     parser.add_argument('-t', '--temp', help='The Template Certificate Image', default="certificates\\CertificateTemplate.jpg")
     parser.add_argument('-c', '--course', help='The Name of the Course', default="Extensive Visual AI Program Phase 4")
-    parser.add_argument('-x', '--co_ord', help='All Cordinates as Tuple to be Printed. Blank to Open Selection Box', default=None, type= tuple)
+    parser.add_argument('-x', '--co_ord', help='All Cordinates as Tuple to be Printed. Blank to Open Selection Box', default=None, type=parse_tuple, nargs=4)
 
     sub_parser = parser.add_subparsers(title='Modes', description= 'Different Types of Creating Certificates & Sending Mails',  dest= 'mode')
     
@@ -76,11 +75,9 @@ if __name__ == '__main__':
     date = args.date
     print_certificate = Print_certificate(args.temp, args.co_ord)
     course_name = args.course
-    print(args.mode)
 
     if args.mode == 'single':
         student_data = ', '.join((args.name, args.score, args.receiver))
-        print(student_data)
         single_mode(sender_mail, student_data, print_certificate, course_name, date, (48,48,30,30))
     elif args.mode == 'batch':
         student_data = CSV_loader(args.data) #args.data_file

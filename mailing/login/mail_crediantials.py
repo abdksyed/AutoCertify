@@ -32,6 +32,13 @@ def send_mail(sender:str, receiver:str, message:str):
     Take User Input of email id and passwrod.
     (** The email id and Password are not stored and used directly for security purpose)
     '''
+    if not isinstance(sender, str):
+        raise TypeError('The sender email id must be a string')
+    if not isinstance(receiver, str):
+        raise TypeError('The receiver email id must be a string')
+    if not isinstance(message, str):
+        raise TypeError('The message must be a string')
+
     global port, _crediantials, i
     
     #Create a securte SSL context
@@ -42,6 +49,7 @@ def send_mail(sender:str, receiver:str, message:str):
             server.login(sender, _crediantials()) #Not storing user input email and password and directly using it to login
             i += 1
         except smtplib.SMTPAuthenticationError:
+            # Allowing Renetering Password 3 times in Invalid
             if i < 3:
                 print('Invalid Credentials. Please Enter Again')
                 _crediantials = _gmail_crediantials() #Re initializing the gmail_credentials to erase closure vairalbles.

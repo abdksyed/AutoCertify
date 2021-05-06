@@ -1,6 +1,7 @@
 import pytest
 import re
 import os
+import io
 import inspect
 import socket
 from itertools import filterfalse
@@ -18,7 +19,7 @@ def test_readme_desc():
     f = open('README.md', "r", encoding='utf8')
     content = f.read().split()
     f.close()
-    assert len(content) >= 50, "Make your README.md file interesting."
+    assert len(content) >= 500, "Make your README.md file interesting."
 
 # 3
 def test_readme_file_for_formatting():
@@ -30,7 +31,7 @@ def test_readme_file_for_formatting():
 # 4
 def test_function_count():
     functions = inspect.getmembers(test_app, inspect.isfunction)
-    assert len(functions) >= 25, 'Test cases seems to be low. Work harder man...'
+    assert len(functions) >= 40, 'Test cases seems to be low. Work harder man...'
 
 # 5
 def test_function_repeatations():
@@ -100,7 +101,6 @@ def test_template_certificate():
 def test_package():
     expected_packages = ['certificates', 'data_loader', 'mailing', 'mailing/login', 'testing/pretests']
     for package in expected_packages:
-        print(package)
         _, _, filenames = next(os.walk(package))
         assert '__init__.py' in filenames
 
@@ -216,7 +216,6 @@ def test_gen_certificate():
         img = printer('Test', 34, i)
     img.save(f'generated_files/Test.jpg')
     *_, filenames = next(os.walk('generated_files'))
-    print(filenames)
 
     assert 'Test.jpg' in filenames
 
@@ -350,3 +349,98 @@ def test_data_loader_invalid_file():
         next(CSV_loader('certificates/CertificateTemplate.jpg'))
 
 # 40
+def test_send_mail_invalid_sender():
+    from mailing import send_mail
+    with pytest.raises(TypeError):
+        send_mail(909, 'my@gmail.com', 'Hi', mail_type='credentials')
+
+# 41
+def test_send_mail_invalid_receiver():
+    from mailing import send_mail
+    with pytest.raises(TypeError):
+        send_mail('my@gmail.com', 909, 'Hi', mail_type='credentials')
+
+# 42
+def test_send_mail_invalid_msg():
+    from mailing import send_mail
+    with pytest.raises(TypeError):
+        send_mail('my@gmail.com', 'my@gmail.com', 404, mail_type='credentials')
+
+# 43
+def test_send_mail_all_positional():
+    from mailing import send_mail
+    with pytest.raises(TypeError):
+        send_mail('my@gmail.com', 'my@gmail.com', '404', 'credentials')
+
+# 44
+def test_send_mail_invalid_type():
+    from mailing import send_mail
+    with pytest.raises(ValueError):
+        send_mail('my@gmail.com', 'my@gmail.com', '404', mail_type='credential')
+
+# 45
+def test_regex_email():
+    from testing.pretests import data_validate
+    data1 = 'Ajay, 97, ajay#@gmail.com'
+    data1 =  data_validate(data1)
+    assert data1.check == False, 'Not catching Invalid Email Address'
+
+# 46
+def test_regex_name():
+    from testing.pretests import data_validate
+    data1 = 'Aj@y, 97, ajay@gmail.com'
+    data1 =  data_validate(data1)
+    assert data1.check == False, 'Not catching Invalid Name'
+
+# 47
+def test_regex_score():
+    from testing.pretests import data_validate
+    data1 = 'Ajay, 103, ajay@gmail.com'
+    data1 =  data_validate(data1)
+    assert data1.check == False, 'Not catching Invalid Score'
+
+## Main App Checks
+
+# 48
+def test_main_batch_mode(monkeypatch, capsys):
+    from utils import Print_certificate
+    from app import batch_mode
+    from data_loader import CSV_loader
+
+    loader = CSV_loader('data.csv')
+    co_ord = ((100,100),(100,100),(100,100),(100,100))
+    printer = Print_certificate('certificates/CertificateTemplate.jpg', co_ord)
+    password = 'vfljntdnfvoifkli'#os.environ.get('GMAIL_PASSWORD')
+    monkeypatch.setattr('getpass.getpass', lambda prompt: password)
+    batch_mode('tsaieva4@gmail.com', loader, printer, 'Test Course', '05-May-2021', (24,24,24,24))
+    captured_stdout, captured_stderr = capsys.readouterr()
+    expected = 'All the Certificates of valid data has been generated and mailed Successfully.'
+    result = captured_stdout.split('\n')[-2] # -1 is empty, -2 is batch_mode print statement
+    assert result == expected, 'All the Mails were not sent!'
+
+# 49
+def test_main_single_mode(monkeypatch, capsys):
+    from utils import Print_certificate
+    from app import single_mode
+
+
+    student_data = 'Andrew Stalt, 91, tsaieva4@gmail.com'
+    co_ord = ((100,100),(100,100),(100,100),(100,100))
+    printer = Print_certificate('certificates/CertificateTemplate.jpg', co_ord)
+
+    password = 'vfljntdnfvoifkli'#os.environ.get('GMAIL_PASSWORD')
+    monkeypatch.setattr('getpass.getpass', lambda prompt: password)
+    single_mode('tsaieva4@gmail.com', student_data, printer, 'Test Course', '05-May-2021', (24,24,24,24))
+    captured_stdout, captured_stderr = capsys.readouterr()
+    expected = 'Certificate Created and Mailed!'
+    result = captured_stdout.split('\n')[-2] # -1 is empty, -2 is batch_mode print statement
+    assert result == expected, 'All the Mails were not sent!'
+
+# 50
+def test_comman_line():
+    from app import single_mode
+
+    subprocess.run('python3 app.py -s tsaieva4@gmail.com -x 100,100 100,100 100,100 100,100 single \
+                    -n "Test Single Mode" --score 78 -r tsaieva4@gmail.com')
+    _, _, filenames = next(os.walk('generated_files'))
+    assert 'Test Single Mode.jpg' in filenames, 'Commnad Line execution is not working'

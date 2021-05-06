@@ -22,6 +22,9 @@ def send_mail(sender:str, receiver:str, message:str, *, mail_type):
     Returns:
         None
     '''
+    if mail_type not in ('credentials', 'oauth'):
+        raise ValueError("Mail Type must be either 'credentials' or 'oauth'")
+        
     if mail_type.lower() == 'credentials':
         mail_crediantials.send_mail(sender, receiver, message)
     elif mail_type.lower() == 'oauth':

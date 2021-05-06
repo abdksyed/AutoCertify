@@ -114,7 +114,7 @@ class Printer:
             return self.printo
         
         if not isinstance(content, str):
-            raise TypeError('The Content to be printed must string')
+            raise TypeError('The Content to be printed must be String')
         if not isinstance(font_size, int):
             raise TypeError('The font size must be an interger between 12-72')
         if not isinstance(type_, str):

@@ -57,3 +57,19 @@ def mailer(sender:str, receiver:str, subject:str, html_file: 'PATH', plain_file:
     send_mail(sender, receiver, message.as_string(), mail_type = mail_type)
 
     return 200, 'SUCCESS'
+
+def parse_tuple(string_tp:str):
+    '''
+    Parses the String of eah co-oridnate to Tuple
+
+    Argument:
+        string_tp - String of Tuple ex '100,120'
+    Return:
+        parsed_tp - Parsed Tuple, ex: (100,120) 
+    '''
+    try:
+        x,y = map(int, string_tp.split(','))
+    except:
+        raise TypeError('The Format should be x,y x,y x,y')
+
+    return x,y

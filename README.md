@@ -41,7 +41,7 @@ To get help on the command line application, run the command:
 python app.py -h
 ```
 output
->>>
+
     usage: AutoCertify [-h] -s SENDER [-date DATE] [-t TEMP] [-c COURSE] [-x CO_ORD] {single,batch} ...
 
     optional arguments:
@@ -61,7 +61,7 @@ output
     {single,batch}
         single              Create and Send certificates to single student.
         batch               Create and Send certificates to batch of student.
->>>
+
 
 To create and send certificate for one student, use **single** mode.  
 To get help on single mode arguments run:
@@ -79,7 +79,11 @@ output
     -r RECEIVER, --receiver RECEIVER
                             The name of the Student
 
-
+#### Lets drill down on each variable:
+```
+-s SENDER, --sender SENDER The sender email id
+```
+This is a MANDATORY keyword argument, and it is the gmail id which is to be used to send the mails from. While running the program it will ask for your gmail passowrd. 
 
 ### Under Development
 The application is still under testing and test cases are being developed, and the README will be updated soon with entire How to Use.
