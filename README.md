@@ -10,6 +10,7 @@ The app can be provided with a template certificate Image, which will be used to
 
 
 ## Quick 5 minute Demo.
+Click on the Image to go to the Demo Video!
 <a href = "https://www.youtube.com/watch?v=9Mq26r7OAxs">
     <img src="certificates/CertificateTemplate.jpg" alt="Certificate" width="500"/>
 </a>
@@ -68,22 +69,6 @@ output
         batch               Create and Send certificates to batch of student.
 
 
-To create and send certificate for one student, use **single** mode.  
-To get help on single mode arguments run:
-```
-python app.py single -h
-```
-output
-
-    usage: AutoCertify single [-h] -n NAME --score SCORE -r RECEIVER
-
-    optional arguments:
-    -h, --help            show this help message and exit
-    -n NAME, --name NAME  The receiver email id
-    --score SCORE         The score of the Student
-    -r RECEIVER, --receiver RECEIVER
-                            The name of the Student
-
 #### Lets drill down on each variable:
 ```
 -s SENDER, --sender SENDER The sender email id
@@ -103,7 +88,58 @@ The Path of the Template Certificate, it is optional and if not given will take 
 ```
 -c --course
 ```
-The name of the course,
+The name of the course, it's optional argument and if not given will take "Extensive Visual AI Program Phase 4" as name of the course.
 
-### Under Development
-The application is still under testing and test cases are being developed, and the README will be updated soon with entire How to Use.
+```
+-x --co_ord
+```
+The co ordinates of the points where the data is to be printed. This is also optional, if not given it will open a window to take user input.
+The user will be prompted for each individual field to **double click at the bottom middle** point where the particular entity is to be printed.
+
+#### Modes
+
+This is mandatory argument which needs to selected after passing the main arguments (which are parent argument), select any one type of mode.
+The two available modes are **single** and **batch**
+
+To create and send certificate for one student, use **single** mode.  
+To get help on single mode arguments run:
+```
+python app.py single -h
+```
+output
+
+    usage: AutoCertify single [-h] -n NAME --score SCORE -r RECEIVER
+
+    -h, --help            show this help message and exit
+    -n NAME, --name NAME  The receiver email id
+    --score SCORE         The score of the Student
+    -r RECEIVER, --receiver RECEIVER
+                            The name of the Student
+
+```
+-n --name
+```
+The name of the student, which need to be printed on the certificate. This is mandatory argument
+
+```
+--score
+```
+The score of the student, the program check based on this score if the student qualified or not for the course. This is also mandatory argument
+
+```
+-r --receiver
+```
+The email address of the student, to which the mail is not be send. This is also mandatory argument
+
+To create and send certificates for a batch of students, use **batch** mode.
+To get help on batch mode arguments run:
+```
+python app.py batch -h
+```
+output
+
+    optional arguments:
+        -d DATA, --data DATA  The File Path of Student CSV Data
+
+The only required argument for batch mode, is the path to the CSV file of the database.
+The argument is optional and if not given will take the default data.csv file present in the project directory.
