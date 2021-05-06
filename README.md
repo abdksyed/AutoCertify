@@ -11,6 +11,7 @@ The app can be provided with a template certificate Image, which will be used to
 
 ## Quick 5 minute Demo.
 Click on the Image to go to the Demo Video!
+
 <a href = "https://www.youtube.com/watch?v=9Mq26r7OAxs">
     <img src="certificates/CertificateTemplate.jpg" alt="Certificate" width="500"/>
 </a>
