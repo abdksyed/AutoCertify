@@ -7,7 +7,10 @@ The application automates the entire task Creating Certificates and mailing each
 The app should be able to be run from command line or directly running the script.
 
 The app can be provided with a template certificate Image, which will be used to print all the students details. The template which is used by default is:  
-<img src="certificates/CertificateTemplate.jpg" alt="Certificate" width="500"/>
+
+
+## Quick 5 minute Demo.
+<img src="certificates/CertificateTemplate.jpg" href="https://www.youtube.com/watch?v=9Mq26r7OAxs"  alt="Certificate" width="500"/>
 
 ## Data
 The Student data, should be in .csv
@@ -83,7 +86,22 @@ output
 ```
 -s SENDER, --sender SENDER The sender email id
 ```
-This is a MANDATORY keyword argument, and it is the gmail id which is to be used to send the mails from. While running the program it will ask for your gmail passowrd. 
+This is a MANDATORY keyword argument, and it is the gmail id which is to be used to send the mails from. While running the program it will ask for your gmail passowrd.
+
+```
+-date
+```
+The date to be printed on the Certificate, it's optional and if not given it used Python Date Time module to take current date.
+
+```
+-t --temp
+```
+The Path of the Template Certificate, it is optional and if not given will take the template certificate from the project, in the certificate package.
+
+```
+-c --course
+```
+The name of the course,
 
 ### Under Development
 The application is still under testing and test cases are being developed, and the README will be updated soon with entire How to Use.
