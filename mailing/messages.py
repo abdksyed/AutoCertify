@@ -94,7 +94,7 @@ def compose_attachment(sender:str, receiver:str, content: MIMEMultipart = None, 
         # Attachment Name if is inside folder, split with '\'
         # and ues the file name only.
         attach_part.add_header('Content-Disposition', 'attachment',
-                                filename= attachment.split('\\')[-1])
+                                filename= attachment.split('/')[-1])
 
         content.attach(attach_part)
 
