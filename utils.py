@@ -29,7 +29,7 @@ class Print_certificate():
         img = self.printer(course_name, fonts[1], 'course')
         img = self.printer(date, fonts[2], 'date')
         img = self.printer('Rohan Shravan', fonts[3], 'signature')
-        img.save(f'generated_files\\{student_det.name}.jpg')
+        img.save(f'generated_files/{student_det.name}.jpg')
 
 
 @pretest.connection_test
