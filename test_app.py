@@ -410,7 +410,7 @@ def test_main_batch_mode(monkeypatch, capsys):
     loader = CSV_loader('data.csv')
     co_ord = ((100,100),(100,100),(100,100),(100,100))
     printer = Print_certificate('certificates/CertificateTemplate.jpg', co_ord)
-    password = 'vfljntdnfvoifkli'#os.environ.get('GMAIL_PASSWORD')
+    password = os.environ.get('GMAIL_PASSWORD')
     monkeypatch.setattr('getpass.getpass', lambda prompt: password)
     batch_mode('tsaieva4@gmail.com', loader, printer, 'Test Course', '05-May-2021', (24,24,24,24))
     captured_stdout, captured_stderr = capsys.readouterr()
@@ -428,7 +428,7 @@ def test_main_single_mode(monkeypatch, capsys):
     co_ord = ((100,100),(100,100),(100,100),(100,100))
     printer = Print_certificate('certificates/CertificateTemplate.jpg', co_ord)
 
-    password = 'vfljntdnfvoifkli'#os.environ.get('GMAIL_PASSWORD')
+    password = os.environ.get('GMAIL_PASSWORD')
     monkeypatch.setattr('getpass.getpass', lambda prompt: password)
     single_mode('tsaieva4@gmail.com', student_data, printer, 'Test Course', '05-May-2021', (24,24,24,24))
     captured_stdout, captured_stderr = capsys.readouterr()

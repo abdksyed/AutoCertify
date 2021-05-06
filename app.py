@@ -24,9 +24,9 @@ def batch_mode(sender_mail: str, student_data: CSV_loader, printer: Print_certif
         
         if int(stud.marks) > 70: #Passing Cutoff
             printer(stud, course_name, date, fonts)
-            mailer(sender_mail, stud.email, 'Congratulations on Qualifying', 'static\\pass.html', 'static\\pass.txt', f'generated_files\\{stud.name}.jpg')
+            mailer(sender_mail, stud.email, 'Congratulations on Qualifying', 'static/pass.html', 'static/pass.txt', f'generated_files/{stud.name}.jpg')
         else:
-            mailer(sender_mail, stud.email, 'Sorry. You missed the Qualification', 'static\\fail.html', 'static\\fail.txt')
+            mailer(sender_mail, stud.email, 'Sorry. You missed the Qualification', 'static/fail.html', 'static/fail.txt')
         
         return batch_mode(sender_mail, student_data, printer, course_name, date, fonts)
     
@@ -45,9 +45,9 @@ def single_mode(sender_mail: str, student_data: str, printer: Print_certificate,
 
     if int(stud.marks) > 70: #Passing Cutoff
         printer(stud, course_name, date, fonts)
-        mailer(sender_mail, stud.email, 'Congratulations on Qualifying', 'static\\pass.html', 'static\\pass.txt', f'generated_files\\{stud.name}.jpg')
+        mailer(sender_mail, stud.email, 'Congratulations on Qualifying', 'static/pass.html', 'static/pass.txt', f'generated_files/{stud.name}.jpg')
     else:   
-        mailer(sender_mail, stud.email, 'Sorry. You missed the Qualification', 'static\\fail.html', 'static\\fail.txt')
+        mailer(sender_mail, stud.email, 'Sorry. You missed the Qualification', 'static/fail.html', 'static/fail.txt')
     
     print('Certificate Created and Mailed!')
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='AutoCertify')
     parser.add_argument("-s", "--sender", help="The sender email id", required= True)
     parser.add_argument('-date', help='Date to be printed on Certificate', default = datetime.today().strftime('%d-%b-%Y'))
-    parser.add_argument('-t', '--temp', help='The Template Certificate Image', default="certificates\\CertificateTemplate.jpg")
+    parser.add_argument('-t', '--temp', help='The Template Certificate Image', default="certificates/CertificateTemplate.jpg")
     parser.add_argument('-c', '--course', help='The Name of the Course', default="Extensive Visual AI Program Phase 4")
     parser.add_argument('-x', '--co_ord', help='All Cordinates as Tuple to be Printed. Blank to Open Selection Box', default=None, type=parse_tuple, nargs=4)
 
