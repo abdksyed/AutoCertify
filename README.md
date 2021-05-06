@@ -10,7 +10,7 @@ The app can be provided with a template certificate Image, which will be used to
 
 
 ## Quick 5 minute Demo.
-<img src="certificates/CertificateTemplate.jpg" href="https://www.youtube.com/watch?v=9Mq26r7OAxs"  alt="Certificate" width="500"/>
+[![Demo](certificates/CertificateTemplate.jpg|width=500px)][https://www.youtube.com/watch?v=9Mq26r7OAxs]
 
 ## Data
 The Student data, should be in .csv
