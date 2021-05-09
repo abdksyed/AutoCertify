@@ -1,6 +1,9 @@
 # AutoCertify
 Automating Certificate Creation 
 
+## Docs
+https://autocertify.readthedocs.io/
+
 ## Objective:
 The application automates the entire task Creating Certificates and mailing each student indivdually based on marks from the Student's Database(.csv).
 
